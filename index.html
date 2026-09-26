@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>HINO Attendance</title>
+<link rel="icon" type="image/png" href="./icon-192.png?v=9">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png?v=9">
+<link rel="manifest" href="./manifest.json?v=9">
+<meta name="theme-color" content="#0a2342">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#0a2342;font-family:system-ui,-apple-system,sans-serif}
+#loader{position:fixed;left:0;top:0;right:0;bottom:0;background:#0a2342;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;color:white;transition:opacity 0.8s ease}
+#loader.fade-out{opacity:0;pointer-events:none}
+.logo-box{width:130px;height:130px;background:white;border-radius:32px;display:flex;align-items:center;justify-content:center;box-shadow:0 16px 40px rgba(0,0,0,.5)}
+.logo-box img{width:95px;height:95px;border-radius:20px}
+.title{margin-top:24px;font-size:28px;font-weight:900;letter-spacing:3px}
+.subtitle{margin-top:10px;font-size:16px;opacity:.85;letter-spacing:0.5px;font-weight:500}
+.years{margin-top:18px;font-size:15px;font-weight:800;color:#d4af37;letter-spacing:2px;background:rgba(212,175,55,.15);padding:8px 18px;border-radius:20px;border:1px solid rgba(212,175,55,.3)}
+#iframeWrap{width:100%;height:100vh;height:100dvh;background:#0a2342;position:relative}
+iframe{width:100%;height:100%;border:0;background:#0a2342;display:block;opacity:0;transition:opacity 0.6s ease}
+iframe.show{opacity:1}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="logo-box"><img src="./icon-512.png?v=9" alt="HINO"></div>
+  <div class="title">HINO</div>
+  <div class="subtitle">Attendance System Loading</div>
+  <div class="years">30 Years</div>
+</div>
+
+<div id="iframeWrap">
+<iframe id="appFrame" src="https://script.google.com/macros/s/AKfycbzCfAQECdSoAc9CuCymy8zi8F7nbe69-0837WcAWNFxbdgSj6v4IgCiHW6fbKlHHgpmfA/exec"></iframe>
+</div>
+
+<script>
+var loader = document.getElementById('loader');
+var iframe = document.getElementById('appFrame');
+var loaded = false;
+
+// Iframe load aana piragu konjam wait panni smooth-a maathu - flash varathu
+iframe.onload = function() {
+  if(loaded) return;
+  loaded = true;
+  // Ulla "HINO Attendance Loading" mudiya 1.5 sec wait
+  setTimeout(function(){
+    iframe.classList.add('show');
+    loader.classList.add('fade-out');
+    setTimeout(function(){ loader.style.display='none'; }, 800);
+  }, 1500);
+};
+
+// Safety: 6 sec-kulla load aagalana force show
+setTimeout(function(){
+  if(!loaded) {
+    iframe.classList.add('show');
+    loader.classList.add('fade-out');
+  }
+}, 6000);
+
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js?v=9');
+}
+</script>
+</body>
+</html>
